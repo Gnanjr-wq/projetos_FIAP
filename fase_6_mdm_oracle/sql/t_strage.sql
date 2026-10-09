@@ -1,0 +1,50 @@
+-- Projeto: Cidade Alfa - PBL Fase 6
+-- Objetivo: criar as tabelas de entrada dos arquivos CSV.
+-- Os dados serão recebidos como texto, sem limpeza nesta etapa.
+
+CREATE TABLE T_SRC_PREFEITURA_CIDADAO (
+    ID_LINHA             VARCHAR2(20),
+    CPF_PREFEITURA       VARCHAR2(30),
+    NOME_CIDADAO         VARCHAR2(200),
+    DT_NASC_PREF         VARCHAR2(30),
+    SEXO_PREF            VARCHAR2(30),
+    LOGRADOURO_PREF      VARCHAR2(300),
+    NUMERO_END_PREF      VARCHAR2(30),
+    COMPLEMENTO          VARCHAR2(200),
+    BAIRRO_PREF          VARCHAR2(200),
+    CEP_PREF             VARCHAR2(20),
+    MUNICIPIO_PREF       VARCHAR2(200),
+    UF_PREF              VARCHAR2(10),
+    EMAIL_PREF           VARCHAR2(320),
+    TELEFONE_PREF        VARCHAR2(50),
+    NACIONALIDADE_PREF   VARCHAR2(100),
+    TIPO_RESIDENCIA      VARCHAR2(100),
+    PROGRAMA_SOCIAL      VARCHAR2(200),
+    ZONA_ELEITORAL       VARCHAR2(30),
+    NUM_NIS              VARCHAR2(30),
+    FOTO_CADASTRO_PATH   VARCHAR2(1000),
+    OCR_TEXTO_BRUTO      VARCHAR2(4000)
+);
+
+CREATE TABLE T_SRC_RECEITA_FEDERAL (
+    ID_LINHA             VARCHAR2(20),
+    CPF_RECEITA          VARCHAR2(30),
+    NOME_COMPLETO        VARCHAR2(200),
+    DT_NASCIMENTO        VARCHAR2(30),
+    SEXO                 VARCHAR2(30),
+    ESTADO_CIVIL         VARCHAR2(30),
+    ESCOLARIDADE         VARCHAR2(100),
+    SITUACAO_CPF         VARCHAR2(100),
+    NACIONALIDADE        VARCHAR2(100),
+    NOME_MAE             VARCHAR2(200),
+    NOME_PAI             VARCHAR2(200),
+    DT_EMISSAO_CPF       VARCHAR2(30),
+    RENDA_DECLARADA      VARCHAR2(50),
+    FAIXA_RENDA          VARCHAR2(30),
+    FOTO_DOC_PATH        VARCHAR2(1000),
+    OCR_TEXTO_BRUTO      VARCHAR2(4000),
+    CONSENTIMENTO_LGPD   VARCHAR2(30),
+    DT_CONSENTIMENTO     VARCHAR2(30),
+    EMAIL                VARCHAR2(320),
+    TELEFONE             VARCHAR2(50)
+);
