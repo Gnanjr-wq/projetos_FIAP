@@ -8,6 +8,7 @@ Os projetos apresentados aqui demonstram a aplicação prática de SQL, Python, 
 
 | Projeto | Foco | Tecnologias |
 |---|---|---|
-| [Cidade Alfa — MDM de Cidadãos (PBL Fase 6)](fase_6_mdm_oracle/README.md) | Integração de fontes, qualidade de dados e consolidação cadastral | Oracle SQL, PL/SQL, VS Code e Git |
+| [Cidade Alfa — MDM de Cidadãos (PBL Fase 6)](fase_6_mdm_oracle/README.md) | Integração de fontes, qualidade de dados e consolidação cadastral | Oracle SQL, PL/SQL, VS Code e Git
+| [Cidade Alfa — Vagas Inteligentes (PBL Fase 7)](fase_7_vagas_inteligentes_oracle/README.md) | Processamento de sensores, permanências, cobranças e mascaramento de placas | Oracle SQL, PL/SQL, VS Code e Git | |
 
 A Fase 6 apresenta a consolidação de 100 cidadãos, o registro de divergências entre fontes e uma view analítica por faixa etária e escolaridade.

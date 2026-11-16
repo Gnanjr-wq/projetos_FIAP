@@ -1,0 +1,53 @@
+-- 1. Conferir duracoes gravadas
+SELECT COUNT(*) AS DURACOES_INCONSISTENTES
+FROM T_PERMANENCIA_VEICULO
+WHERE DT_ENTRADA IS NULL
+   OR DT_SAIDA IS NULL
+   OR DT_SAIDA < DT_ENTRADA
+   OR NR_TEMPO_PERMANENCIA_MIN IS NULL
+   OR NR_TEMPO_PERMANENCIA_MIN <>
+      ROUND(ROUND((DT_SAIDA - DT_ENTRADA) * 86400) / 60);
+
+-- 2. Conferir formato da mascara no destino
+-- Aceita valores inteiramente mascarados ou prefixo de
+-- asteriscos seguido de exatamente tres caracteres visiveis.
+SELECT COUNT(*) AS PLACAS_FORA_DO_PADRAO
+FROM T_PERMANENCIA_VEICULO
+WHERE NR_PLACA_VEICULO IS NULL
+   OR NOT REGEXP_LIKE(
+       NR_PLACA_VEICULO,
+       '^([*]+|[*]+[^*]{3})$'
+   );
+
+-- 3. Conferir cobrancas com os parametros desta carga:
+-- 30 minutos gratuitos e R$ 0,20 por minuto excedente.
+SELECT COUNT(*) AS COBRANCAS_INCONSISTENTES
+FROM T_COBRANCA_VAGA c
+JOIN T_PERMANENCIA_VEICULO p
+  ON p.ID_PERMANENCIA = c.ID_PERMANENCIA
+JOIN T_VAGA v
+  ON v.CD_SENSOR = p.CD_SENSOR
+ AND v.NR_VAGA = p.NR_VAGA
+WHERE v.TP_VAGA <> 'COMUM'
+   OR p.NR_TEMPO_PERMANENCIA_MIN <= 30
+   OR c.NR_MINUTOS_EXCEDENTES <>
+      p.NR_TEMPO_PERMANENCIA_MIN - 30
+   OR c.VL_COBRANCA <>
+      ROUND((p.NR_TEMPO_PERMANENCIA_MIN - 30) * 0.20, 2)
+   OR c.VL_COBRANCA <= 0
+   OR c.ST_COBRANCA <> 'G'
+   OR c.DT_VENCIMENTO <> p.DT_ENTRADA + 30;
+
+-- 4. Conferir se alguma permanencia elegivel ficou sem cobranca
+SELECT COUNT(*) AS COBRANCAS_FALTANTES
+FROM T_PERMANENCIA_VEICULO p
+JOIN T_VAGA v
+  ON v.CD_SENSOR = p.CD_SENSOR
+ AND v.NR_VAGA = p.NR_VAGA
+WHERE v.TP_VAGA = 'COMUM'
+  AND p.NR_TEMPO_PERMANENCIA_MIN > 30
+  AND NOT EXISTS (
+      SELECT 1
+      FROM T_COBRANCA_VAGA c
+      WHERE c.ID_PERMANENCIA = p.ID_PERMANENCIA
+  );
